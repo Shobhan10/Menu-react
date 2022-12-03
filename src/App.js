@@ -5,23 +5,13 @@ import Menu from "./Menu";
 
 function App() {
   const [menu, setMenu] = useState(items);
-  const [categories, setCategories] = useState([]);
 
-  let categoryArray = ["All"];
-  for (let i = 0; i < items.length; i++) {
-    categoryArray.push(items[i].category);
-  }
-  let category = [...new Set(categoryArray)];
-
-  console.log(category);
-  // let a = [1, 2, 3];
-  // setCategories(category);
-  // console.log(categories);
+  const categories = ["all", ...new Set(items.map((item) => item.category))];
 
   const filterItems = (category) => {
     const newItems = items.filter((item) => item.category === category);
     setMenu(newItems);
-    if (category === "All") {
+    if (category === "all") {
       setMenu(items);
     }
   };
@@ -33,7 +23,7 @@ function App() {
           <h2>Our Menu</h2>
           <div className="underline"></div>
         </div>
-        <Categories category={category} filterItems={filterItems} />
+        <Categories categories={categories} filterItems={filterItems} />
         <Menu menu={menu} />
       </section>
     </main>
